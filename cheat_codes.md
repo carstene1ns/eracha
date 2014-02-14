@@ -7,7 +7,7 @@ They need to be entered quickly while playing, I do not know if this is because
 of a tight game loop, that clears the last pressed keys soon or intentional.
 
 code | effect
-----------------------
+---- | ---------------
 live | fills up health
 rose | +500 ammunition
 jane | god mode

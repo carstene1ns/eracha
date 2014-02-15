@@ -1,0 +1,7 @@
+# ignore 
+
+# cmake files
+tools/CMakeFiles
+tools/CMakeCache.txt
+tools/cmake_install.cmake
+tools/Makefile

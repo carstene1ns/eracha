@@ -5,12 +5,8 @@ This files describes the archive format used by the following files.
 The file extension contains information about the file types inside
 the archive:
 
-- MIR01.MWF ([W] - wave sounds)
-  MIR02.MWF
-  MIR03.MWF
-- MIR10.MMF ([M] - mod music)
-  MIR11.MMF
-  MIR12.MMF
+- MIR01.MWF, MIR02.MWF, MIR03.MWF ([W] - wave sounds)
+- MIR10.MMF, MIR11.MMF, MIR12.MMF ([M] - mod music)
 - MIRA.MAF ([A] - attributes)
 - MIRB.MBF ([B] - backgrounds)
 - MIRM.MMF ([M] - maps)
@@ -48,6 +44,7 @@ File Contents
 
 This is the output of edam, from the tools directory:
 
+```
 INFO: Found 10 files in DATA/MIR01.MWF.
 INFO: File 1 @ offset 0x00040a: name: 'MRI01.WAV', size: 4466 bytes
 INFO: File 2 @ offset 0x00157c: name: 'MRI02.WAV', size: 2389 bytes
@@ -137,3 +134,4 @@ INFO: File 6 @ offset 0x0eb97d: name: 'ERA022.TIL', size: 192791 bytes
 INFO: File 7 @ offset 0x11aa94: name: 'ERA031.TIL', size: 192791 bytes
 INFO: File 8 @ offset 0x149bab: name: 'ERA032.TIL', size: 192791 bytes
 INFO: File 9 @ offset 0x178cc2: name: 'ERA041.TIL', size: 192791 bytes
+```

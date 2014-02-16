@@ -11,4 +11,4 @@ code | effect
 live | fills up health
 rose | +500 ammunition
 jane | god mode
-oooz | skip level
+oooz | skip level (z may be y with certain keyboard layouts)

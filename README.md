@@ -5,7 +5,8 @@ This is a little project to reverse engineer parts of the ERACHA platformer,
 made by korean game developers Mirinae Software and released for DOS in 1996.
 
 Currently, it only contains assorted notes about the used file formats and
-hopefully soon some helper programs to deal with them.
+some hacked up helper programs to deal with them.
+Currently there is an extractor and a converter utility (both alpha stage).
 
 The goal is to create an cross platform interpreter of the game sometime.
 

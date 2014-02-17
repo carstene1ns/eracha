@@ -10,7 +10,8 @@ project (eracha_tools)
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -Wall -Wextra -pedantic")
 
-# currently we only have one program
+# currently we have two programs
 add_executable(edam edam.c)
+add_executable(edc edc.c)
 
 # EOF

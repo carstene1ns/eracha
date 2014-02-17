@@ -32,6 +32,9 @@ Because the pcx-header is removed, there is no dimensions defined in the file
 itself. I guessed 320x200, because that was the most used resolution back then.
 So, if we replace the custom header with a standard pcx header, set bit depth
 to 8, dimensions 319x199 and empty 16 colors palette, the Gimp can open the
-images without complaining (still need to write a little converter).
-There is some minor glitch though, about 2/3 of the right part is moved 1 pixel
-upwards, this needs to be investigated.
+images without complaining.
+```edc``` can convert bck to pcx.
+
+A thumbnail of the converted backgrounds is available here:
+
+![BCK2PCX](eracha_bck2pcx.png)

@@ -1,10 +1,10 @@
 Assorted notes about SAN/SCB Format
 ===================================
 
-Clearly a graphics format.
+Main graphics format for objects.
 
 SAN - sprite animation
-SCB - color map?
+SCB - coordinates?
 
 Not all SAN files have a corresponding SCB file, but they are clearly related.
 
@@ -38,6 +38,15 @@ This means whenever a pixel with value 0x0 occurs, the next byte does not
 contain the next pixel, but the count of transparent pixels in the current
 row instead. The pixel has to be skipped and appropriate count of pixels
 has to be added.
+
+SCB HEADER
+----------
+
+0x0: number of frames
+
+0x2: 1 (unknown magic)
+
+0x4 - EOF: 16 bytes per frame
 
 Additional Information
 ----------------------

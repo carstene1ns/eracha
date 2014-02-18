@@ -5,3 +5,8 @@ tools/CMakeFiles
 tools/CMakeCache.txt
 tools/cmake_install.cmake
 tools/Makefile
+
+# executables
+tools/edam
+tools/edc
+tools/san2ascii

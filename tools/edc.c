@@ -35,7 +35,7 @@ int main (int argc, char *argv[]) {
   char *filename_from, *filename_to;
   int mode;
   unsigned long size;
-  char *buf;
+  unsigned char *buf;
   size_t res;
 
   /* print usage info, if no file given */
@@ -45,6 +45,7 @@ int main (int argc, char *argv[]) {
     printf("usage: edc file1.ext1 [file2.ext2]\n\n");
     printf("modes supported:\n");
     printf(" - BCK => PCX\n");
+    printf(" - SAN => PPM\n");
     exit(0);
   } else if(argc == 3) {
     /* filenames given */
@@ -76,6 +77,9 @@ int main (int argc, char *argv[]) {
     mode = 2;
     printf("converting pcx to bck\n");
 */
+  } else if (strncmp(ext, ".san", 4) == 0 || strncmp(ext, ".SAN", 4) == 0) {
+    mode = 3;
+    printf("Converting san to ppm\n");
   } else {
     printf("extension is '%s', do not know what to do...(yet!)\n", ext + 1);
     exit(1);
@@ -92,7 +96,7 @@ int main (int argc, char *argv[]) {
   size = ftell(fp);
   rewind(fp);
 
-  buf = (char *)malloc(sizeof(char) * size);
+  buf = (unsigned char *)malloc(sizeof(char) * size);
   if(buf == NULL) {
     perror("malloc");
     exit(1);
@@ -151,6 +155,90 @@ int main (int argc, char *argv[]) {
       fclose(des);
     } else {
       printf("'%s' is no valid BCK file!\n", filename_from);
+    }
+  } else if (mode == 3) {
+    /* check header */
+    if (buf[0] == '[' && buf[1] == 'S' && buf[5] == 'S' && buf[9] == ']') {
+      unsigned int count;
+      /* check for empty file name to copy to */
+      if (filename_to[0] == '\0') {
+        filename_to = changefileext(filename_from, ".ppm");
+      }
+
+      /* parse file header */
+      count = buf[10];
+      printf("'%s' has %d images, file size is %li.\n",
+        filename_from, count, size-12);
+
+      unsigned int id, offset, width, height, bytes, i, j, ignore_flag, padding, pix_count;
+      offset = 12;
+      for (id = 0; id < count; id++) {
+        char id_ext[5];
+        sprintf(id_ext, ".%02d_ppm", id);
+        filename_to = changefileext(filename_from, id_ext);
+
+        FILE *des = fopen(filename_to, "wb");
+        if(!des) {
+          perror("create file");
+          exit(1);
+        }
+
+        /* parse image header */
+        width = buf[offset];
+        height = buf[offset + 2];
+        bytes = buf[offset + 4] | (buf[offset + 5] << 8);
+
+        printf("image %d, %dx%d, size is %d.\n",
+          id + 1, width, height, bytes);
+
+        unsigned char pixel[3];
+        fprintf(des, "P6\n%d %d\n255\n", width, height);
+        pix_count = 0;
+
+        for (i = 0; i < bytes; i++) {
+          if (ignore_flag) {
+            ignore_flag = 0;
+            continue;
+          }
+
+          /* check for rle padding */
+          if (buf[offset + 6 + i] == '\0') {
+            /* ignore next byte in outer loop */
+            ignore_flag = 1;
+            padding = buf[offset + 6 + i + 1];
+
+            for (j = 0; j < padding; j++) {
+              pixel[0] = 0;   /* red */
+              pixel[1] = 255; /* green */
+              pixel[2] = 0;   /* blue */
+              fwrite(pixel, 1, 3, des);
+              pix_count++;
+            }
+          } else {
+            pixel[0] = buf[offset + 6 + i]; /* red */
+            pixel[1] = buf[offset + 6 + i]; /* green */
+            pixel[2] = buf[offset + 6 + i]; /* blue */
+            fwrite(pixel, 1, 3, des);
+            pix_count++;
+          }
+        }
+
+        /* fill up last row */
+        for (j = pix_count - 1; j < width * height; j++) {
+          pixel[0] = 0;   /* red */
+          pixel[1] = 255; /* green */
+          pixel[2] = 0;   /* blue */
+          fwrite(pixel, 1, 3, des);
+        }
+
+        /* set offset for next image */
+        offset += bytes + 8;
+
+        /* close file */
+        fclose(des);
+      }
+    } else {
+      printf("'%s' is no valid SAN file!\n", filename_from);
     }
   } else {
     printf("-UNKNOWN MODE-\n");

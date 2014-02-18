@@ -39,7 +39,15 @@ contain the next pixel, but the count of transparent pixels in the current
 row instead. The pixel has to be skipped and appropriate count of pixels
 has to be added.
 
+Additional Information
+----------------------
+
 ```san2ascii``` can output ascii representation of san files and ```edc```
-should support it soon. (Need to choose a file format, every bitmap-like
-is easily possible, but they do not support multiple frames, maybe output
-multiple files?)
+can convert to multiple ppm files (every bitmap-like is easily possible,
+but they do not support multiple frames).
+Currently only the pixel data is extracted (no palette parsed), so the images
+will be in shades of gray.
+
+An example is available here (converted to gif for convenience):
+
+![SAN2PPM](eracha_light.gif)

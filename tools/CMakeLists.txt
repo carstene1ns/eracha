@@ -14,5 +14,6 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -Wall -Wextra -pedantic")
 add_executable(edam edam.c)
 add_executable(edc edc.c)
 add_executable(san2ascii san2ascii.c)
+add_executable(pal2gpl pal2gpl.c)
 
 # EOF

@@ -19,4 +19,4 @@ Additional Information
 
 OPEN.PAL looks like this:
 
-![OPENPAL](eracha_open_pal.png)
+![OPENPAL](imgs/eracha_open_pal.png)

@@ -7,6 +7,8 @@ SAN - sprite animation
 SCB - coordinates?
 
 Not all SAN files have a corresponding SCB file, but they are clearly related.
+It seems that only enemies have it and other objects not. I guess, that it is
+related to the fact that they can hurt the player.
 
 SAN HEADER
 ----------
@@ -59,4 +61,4 @@ will be in shades of gray.
 
 An example is available here (converted to gif for convenience):
 
-![SAN2PPM](eracha_light.gif)
+![SAN2GIF](imgs/eracha_light.gif)

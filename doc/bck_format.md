@@ -37,4 +37,4 @@ images without complaining.
 
 A thumbnail of the converted backgrounds is available here:
 
-![BCK2PCX](eracha_bck2pcx.png)
+![BCK2PCX](imgs/eracha_bck2pcx.png)

@@ -9,4 +9,3 @@ HEADER
 ------
 
 0x0 - 0x1D: file magic "[SaemSong] Dedit Save.. file 0x07 0x00"
-

@@ -92,7 +92,7 @@ int main (int argc, char *argv[]) {
   fprintf(des, "GIMP Palette\nName: eracha\n#\n");
 
   unsigned int i;
-  for (i = 0; i < count; i = i + 3) {
+  for (i = 0; i < size; i = i + 3) {
     /* write color: R,  G,  B   ->     R,          G,          B */
     fprintf(des, "%3d %3d %3d\n", buf[i], buf[i + 1], buf[i + 2]);
   }

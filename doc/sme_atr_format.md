@@ -31,3 +31,7 @@ ATR Header
 
 array with 4 bytes of attributes follows until EOF.
 
+Additional Information
+----------------------
+
+```sme2ascii``` can show an ascii presentation of the levels.

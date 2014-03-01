@@ -16,6 +16,7 @@ add_executable(edc src/edc.c)
 add_executable(san2ascii src/san2ascii.c)
 add_executable(pal2gpl src/pal2gpl.c)
 add_executable(til2png src/til2png.c)
+add_executable(sme2ascii src/sme2ascii.c)
 
 # png converters need libpng
 find_package(PNG 1.6 REQUIRED)

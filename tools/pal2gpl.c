@@ -93,8 +93,8 @@ int main (int argc, char *argv[]) {
 
   unsigned int i;
   for (i = 0; i < size; i = i + 3) {
-    /* write color: R,  G,  B   ->     R,          G,          B */
-    fprintf(des, "%3d %3d %3d\n", buf[i], buf[i + 1], buf[i + 2]);
+    /* write color:            -> R,           G,               B */
+    fprintf(des, "%3d %3d %3d\n", buf[i] << 2, buf[i + 1] << 2, buf[i + 2] << 2);
   }
 
   /* all good, close files and exit */

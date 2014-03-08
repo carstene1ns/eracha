@@ -58,7 +58,7 @@ int main (int argc, char *argv[]) {
   } else if(argc == 2) {
     /* only one filename given */
     filename_from = argv[1];
-    filename_to = (char *)malloc(sizeof(filename_from)+1);
+    filename_to = (char *)malloc(sizeof(char) * strlen(filename_from)+1);
     if (filename_to == NULL) {
       perror("malloc");
       exit(1);

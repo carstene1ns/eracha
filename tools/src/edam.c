@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 /* magic numbers */
 #define END_OF_HEADER 1034
@@ -21,7 +22,7 @@ typedef struct {
 
 /* extract a given file  */
 void extractfile(FILE *src, char *filename, unsigned int offset, unsigned int size) {
-  printf("Copying %i bytes from %x to %s\n", size, offset, filename);
+  printf("Copying %i bytes from 0x%06x to %s\n", size, offset, filename);
 
   FILE *des = fopen(filename, "wb");
   if(!des) {
@@ -105,6 +106,11 @@ int main (int argc, char *argv[]) {
        * as they are seperated by 0x00, we get string terminators for free
        */
       fread(files[i].name, 1, 13, fp);
+
+      /* convert filenames to lowercase */
+      for (int j = 0; files[i].name[j]; j++) {
+        files[i].name[j] = tolower(files[i].name[j]);
+      }
     }
   }
 

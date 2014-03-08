@@ -14,20 +14,26 @@ SME Header
 
 0x14 - 0x20: name of tileset with padding to the end (0x0), e.g. "era001.TIL"
 
-0x21 - 0x22: count of objects
+0x21 - 0x22: count of blocks in width
 
 0x23 - 0x24: padding (0x0)
 
-0x25: count of objects in row
+0x25 - 0x26: count of blocks in height
 
-array with 2 bytes of blocks in level related to the linked tileset.
+DATA
+----
+
+array with 2 bytes of blocks in level with tile number of linked tileset
 
 ATR Header
 ----------
 
-0x0 - 0x1: count of objects
+0x0 - 0x1: count of blocks in width
 
-0x2: count of objects in row
+0x2 - 0x3: count of blocks in height
+
+DATA
+----
 
 array with 4 bytes of attributes follows until EOF.
 

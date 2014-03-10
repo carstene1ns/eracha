@@ -27,11 +27,6 @@ void changefileext(char *szPath, char *ext) {
     strcat(pFile, ext);
 }
 
-int getpixelfromtile(unsigned char *image, int tile, int tile_size, int x, int y) {
-            /* offset        tile                           y               x */
-  return image[ENDOFHEADER + tile * tile_size * tile_size + y * tile_size + x];
-}
-
 /* main function */
 int main (int argc, char *argv[]) {
   char *filename_from, *filename_to;
@@ -138,9 +133,9 @@ int main (int argc, char *argv[]) {
   /* set palette */
   palette = (png_colorp) png_malloc(png_ptr, 256 * sizeof (png_color));
   for (i = 0; i < 256; i++) {
-    palette[i].red   = (buf[ENDOFHEADER + tile_size * tile_size * count + i * 3] << 2) - 1;
-    palette[i].green = (buf[ENDOFHEADER + tile_size * tile_size * count + i * 3 + 1] << 2) - 1;
-    palette[i].blue  = (buf[ENDOFHEADER + tile_size * tile_size * count + i * 3 + 2] << 2) - 1;
+    palette[i].red   = (buf[ENDOFHEADER + tile_size * tile_size * count + i * 3] << 2);
+    palette[i].green = (buf[ENDOFHEADER + tile_size * tile_size * count + i * 3 + 1] << 2);
+    palette[i].blue  = (buf[ENDOFHEADER + tile_size * tile_size * count + i * 3 + 2] << 2);
     //printf("r %d g %d b %d\n", palette[i].red, palette[i].green, palette[i].blue);
   }
   png_set_PLTE(png_ptr, info_ptr, palette, 256);
@@ -164,7 +159,7 @@ int main (int argc, char *argv[]) {
       for (j = 0; j < ROWTILES; j++) {    /* tile count */
         for (k = 0; k < tile_size; k++) { /* tile width */
           /* construct row */
-          row_buf[j * tile_size + k] = getpixelfromtile(buf, id+j, tile_size, k, i);
+          row_buf[j * tile_size + k] = buf[ENDOFHEADER + (id+j) * tile_size * tile_size + i * tile_size + k];
         }
       }
       /* write row */

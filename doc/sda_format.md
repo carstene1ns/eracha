@@ -1,9 +1,9 @@
 SDA Format
 ==========
 
-Seems to be leftover files from their editor, they are not touched while
-running the game with dosbox. 
-But why are they on the disk, if not needed?
+Seems to be leftover files from their editor.
+They are not touched while running the game with dosbox, but referenced in
+ERACHA.EXE. So why are they on the disk, if not needed?
 
 HEADER
 ------

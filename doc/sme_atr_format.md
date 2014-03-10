@@ -43,40 +43,74 @@ is drawn there)
 known flags (X):
 
 0:
+
 1: has transparency
+
 2: solid floor
+
 3: draw in foreground (partly hides player sprite)
+
 4: solid walls and ceiling
+
 5: left edge (stagger animation)
+
 6: right edge (stagger animation)
+
 7:
+
 8: something about stairs/slopes?
+
 9:
+
 10:
+
 11:
+
 12:
+
 13:
+
 14:
+
 15:
+
 16:
+
 17:
+
 18:
+
 19:
+
 20:
+
 21:
+
 22:
+
 23:
+
 24:
+
 25:
+
 26:
+
 27:
+
 28:
+
 29:
+
 30:
+
 31:
+
+---
 
 Additional Information
 ----------------------
 
 ```sme2ascii``` can show an ascii presentation of the levels.
+
 ```levelviewer``` displays a level

@@ -46,16 +46,16 @@ This is the output of edam, from the tools directory:
 
 ```
 INFO: Found 10 files in DATA/MIR01.MWF.
-INFO: File 1 @ offset 0x00040a: name: 'MRI01.WAV', size: 4466 bytes
-INFO: File 2 @ offset 0x00157c: name: 'MRI02.WAV', size: 2389 bytes
-INFO: File 3 @ offset 0x001ed1: name: 'MRI03.WAV', size: 1866 bytes
-INFO: File 4 @ offset 0x00261b: name: 'MRI04.WAV', size: 2072 bytes
-INFO: File 5 @ offset 0x002e33: name: 'MRI05.WAV', size: 3222 bytes
-INFO: File 6 @ offset 0x003ac9: name: 'MRI06.WAV', size: 1906 bytes
-INFO: File 7 @ offset 0x00423b: name: 'MRI07.WAV', size: 4988 bytes
-INFO: File 8 @ offset 0x0055b7: name: 'MRI08.WAV', size: 7724 bytes
-INFO: File 9 @ offset 0x0073e3: name: 'MRI09.WAV', size: 1674 bytes
-INFO: File 10 @ offset 0x007a6d: name: 'AB01.WAV', size: 9062 bytes
+INFO: File 1 @ offset 0x00040a: name: 'mri01.wav', size: 4466 bytes
+INFO: File 2 @ offset 0x00157c: name: 'mri02.wav', size: 2389 bytes
+INFO: File 3 @ offset 0x001ed1: name: 'mri03.wav', size: 1866 bytes
+INFO: File 4 @ offset 0x00261b: name: 'mri04.wav', size: 2072 bytes
+INFO: File 5 @ offset 0x002e33: name: 'mri05.wav', size: 3222 bytes
+INFO: File 6 @ offset 0x003ac9: name: 'mri06.wav', size: 1906 bytes
+INFO: File 7 @ offset 0x00423b: name: 'mri07.wav', size: 4988 bytes
+INFO: File 8 @ offset 0x0055b7: name: 'mri08.wav', size: 7724 bytes
+INFO: File 9 @ offset 0x0073e3: name: 'mri09.wav', size: 1674 bytes
+INFO: File 10 @ offset 0x007a6d: name: 'ab01.wav', size: 9062 bytes
 
 INFO: Found 2 files in DATA/MIR02.MWF.
 INFO: File 1 @ offset 0x00040a: name: 'inter!.wav', size: 54114 bytes
@@ -103,35 +103,35 @@ INFO: File 8 @ offset 0x28c806: name: 'era032.atr', size: 361604 bytes
 INFO: File 9 @ offset 0x2e4c8a: name: 'era041.atr', size: 300004 bytes
 
 INFO: Found 9 files in DATA/MIRB.MBF.
-INFO: File 1 @ offset 0x00040a: name: 'ERA001.BCK', size: 53081 bytes
-INFO: File 2 @ offset 0x00d363: name: 'ERA002.BCK', size: 71270 bytes
-INFO: File 3 @ offset 0x01e9c9: name: 'ERA011.BCK', size: 33361 bytes
-INFO: File 4 @ offset 0x026c1a: name: 'ERA012.BCK', size: 25227 bytes
-INFO: File 5 @ offset 0x02cea5: name: 'ERA021.BCK', size: 43030 bytes
-INFO: File 6 @ offset 0x0376bb: name: 'ERA022.BCK', size: 98706 bytes
-INFO: File 7 @ offset 0x04f84d: name: 'ERA031.BCK', size: 52441 bytes
-INFO: File 8 @ offset 0x05c526: name: 'ERA032.BCK', size: 38280 bytes
-INFO: File 9 @ offset 0x065aae: name: 'ERA041.BCK', size: 74776 bytes
+INFO: File 1 @ offset 0x00040a: name: 'era001.bck', size: 53081 bytes
+INFO: File 2 @ offset 0x00d363: name: 'era002.bck', size: 71270 bytes
+INFO: File 3 @ offset 0x01e9c9: name: 'era011.bck', size: 33361 bytes
+INFO: File 4 @ offset 0x026c1a: name: 'era012.bck', size: 25227 bytes
+INFO: File 5 @ offset 0x02cea5: name: 'era021.bck', size: 43030 bytes
+INFO: File 6 @ offset 0x0376bb: name: 'era022.bck', size: 98706 bytes
+INFO: File 7 @ offset 0x04f84d: name: 'era031.bck', size: 52441 bytes
+INFO: File 8 @ offset 0x05c526: name: 'era032.bck', size: 38280 bytes
+INFO: File 9 @ offset 0x065aae: name: 'era041.bck', size: 74776 bytes
 
 INFO: Found 9 files in DATA/MIRM.MMF.
-INFO: File 1 @ offset 0x00040a: name: 'ERA001.SME', size: 201641 bytes
-INFO: File 2 @ offset 0x0317b3: name: 'ERA002.SME', size: 200041 bytes
-INFO: File 3 @ offset 0x06251c: name: 'ERA011.SME', size: 200041 bytes
-INFO: File 4 @ offset 0x093285: name: 'ERA012.SME', size: 208041 bytes
-INFO: File 5 @ offset 0x0c5f2e: name: 'ERA021.SME', size: 206233 bytes
-INFO: File 6 @ offset 0x0f84c7: name: 'ERA022.SME', size: 200041 bytes
-INFO: File 7 @ offset 0x129230: name: 'ERA031.SME', size: 120041 bytes
-INFO: File 8 @ offset 0x146719: name: 'ERA032.SME', size: 180841 bytes
-INFO: File 9 @ offset 0x172982: name: 'ERA041.SME', size: 150041 bytes
+INFO: File 1 @ offset 0x00040a: name: 'era001.sme', size: 201641 bytes
+INFO: File 2 @ offset 0x0317b3: name: 'era002.sme', size: 200041 bytes
+INFO: File 3 @ offset 0x06251c: name: 'era011.sme', size: 200041 bytes
+INFO: File 4 @ offset 0x093285: name: 'era012.sme', size: 208041 bytes
+INFO: File 5 @ offset 0x0c5f2e: name: 'era021.sme', size: 206233 bytes
+INFO: File 6 @ offset 0x0f84c7: name: 'era022.sme', size: 200041 bytes
+INFO: File 7 @ offset 0x129230: name: 'era031.sme', size: 120041 bytes
+INFO: File 8 @ offset 0x146719: name: 'era032.sme', size: 180841 bytes
+INFO: File 9 @ offset 0x172982: name: 'era041.sme', size: 150041 bytes
 
 INFO: Found 9 files in DATA/MIRT.MTF.
-INFO: File 1 @ offset 0x00040a: name: 'ERA001.TIL', size: 192791 bytes
-INFO: File 2 @ offset 0x02f521: name: 'ERA002.TIL', size: 192791 bytes
-INFO: File 3 @ offset 0x05e638: name: 'ERA011.TIL', size: 192791 bytes
-INFO: File 4 @ offset 0x08d74f: name: 'ERA012.TIL', size: 192791 bytes
-INFO: File 5 @ offset 0x0bc866: name: 'ERA021.TIL', size: 192791 bytes
-INFO: File 6 @ offset 0x0eb97d: name: 'ERA022.TIL', size: 192791 bytes
-INFO: File 7 @ offset 0x11aa94: name: 'ERA031.TIL', size: 192791 bytes
-INFO: File 8 @ offset 0x149bab: name: 'ERA032.TIL', size: 192791 bytes
-INFO: File 9 @ offset 0x178cc2: name: 'ERA041.TIL', size: 192791 bytes
+INFO: File 1 @ offset 0x00040a: name: 'era001.til', size: 192791 bytes
+INFO: File 2 @ offset 0x02f521: name: 'era002.til', size: 192791 bytes
+INFO: File 3 @ offset 0x05e638: name: 'era011.til', size: 192791 bytes
+INFO: File 4 @ offset 0x08d74f: name: 'era012.til', size: 192791 bytes
+INFO: File 5 @ offset 0x0bc866: name: 'era021.til', size: 192791 bytes
+INFO: File 6 @ offset 0x0eb97d: name: 'era022.til', size: 192791 bytes
+INFO: File 7 @ offset 0x11aa94: name: 'era031.til', size: 192791 bytes
+INFO: File 8 @ offset 0x149bab: name: 'era032.til', size: 192791 bytes
+INFO: File 9 @ offset 0x178cc2: name: 'era041.til', size: 192791 bytes
 ```

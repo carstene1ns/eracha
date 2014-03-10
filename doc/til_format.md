@@ -19,6 +19,8 @@ FOOTER
 
 768 bytes palette with 256 colors rgb in vga format (needs to be shifted)
 
+---
+
 Additional Information
 ----------------------
 

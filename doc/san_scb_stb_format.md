@@ -1,14 +1,21 @@
-Assorted notes about SAN/SCB Format
-===================================
+Assorted notes about SAN/SCB/STB Formats
+========================================
 
-Main graphics format for objects.
+Main graphics format for objects and enemies with corresponding data files.
 
 SAN - sprite animation
 SCB - coordinates?
+STB - movement/frames relation
 
 Not all SAN files have a corresponding SCB file, but they are clearly related.
 It seems that only enemies have it and other objects not. I guess, that it is
-related to the fact that they can hurt the player.
+related to the fact that they can hurt the player. Certain enemies have a STB
+file, it defines the movement paths if it is special. For example the ghosts:
+There are different types of them, some cannot move without STB file, some only
+move vertically to player position. It seems all enemies have a default
+movement defined and any additional movement is defined in the STB file.
+This explains some enemies (e.g. fireman) do not need it, because their
+movement is only in one direction, towards the player.
 
 SAN HEADER
 ----------
@@ -49,6 +56,13 @@ SCB HEADER
 0x2: 1 (unknown magic)
 
 0x4 - EOF: 16 bytes per frame
+
+STB HEADER
+----------
+
+0x0 - 0x1: number of 10 byte entries
+
+---
 
 Additional Information
 ----------------------

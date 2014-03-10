@@ -25,6 +25,8 @@ length: 0x301 (768) bytes
 
 256 color palette
 
+---
+
 Additional Information
 ----------------------
 

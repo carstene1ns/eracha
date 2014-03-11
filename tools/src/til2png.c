@@ -132,10 +132,12 @@ int main (int argc, char *argv[]) {
 
   /* set palette */
   palette = (png_colorp) png_malloc(png_ptr, 256 * sizeof (png_color));
+  unsigned int palpos;
   for (i = 0; i < 256; i++) {
-    palette[i].red   = (buf[ENDOFHEADER + tile_size * tile_size * count + i * 3] << 2);
-    palette[i].green = (buf[ENDOFHEADER + tile_size * tile_size * count + i * 3 + 1] << 2);
-    palette[i].blue  = (buf[ENDOFHEADER + tile_size * tile_size * count + i * 3 + 2] << 2);
+    palpos = ENDOFHEADER + tile_size * tile_size * count + i * 3;
+    palette[i].red   = (buf[palpos] << 2) | (buf[palpos] >> 4);
+    palette[i].green = (buf[palpos + 1] << 2) | (buf[palpos + 1] >> 4);
+    palette[i].blue  = (buf[palpos + 2] << 2) | (buf[palpos + 2] >> 4);
     //printf("r %d g %d b %d\n", palette[i].red, palette[i].green, palette[i].blue);
   }
   png_set_PLTE(png_ptr, info_ptr, palette, 256);

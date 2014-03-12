@@ -20,6 +20,7 @@ add_executable(edc src/edc.c)
 add_executable(san2ascii src/san2ascii.c)
 add_executable(pal2gpl src/pal2gpl.c)
 add_executable(til2png src/til2png.c)
+add_executable(san2png src/san2png.c)
 add_executable(sme2ascii src/sme2ascii.c)
 add_executable(levelviewer src/levelviewer.c)
 
@@ -29,7 +30,9 @@ include(FindPkgConfig)
 # png converters need libpng
 find_package(PNG 1.6 REQUIRED)
 target_include_directories(til2png PUBLIC ${PNG_INCLUDE_DIR})
+target_include_directories(san2png PUBLIC ${PNG_INCLUDE_DIR})
 target_link_libraries(til2png ${PNG_LIBRARY})
+target_link_libraries(san2png ${PNG_LIBRARY})
 
 # levelviewer needs sdl2, sdl2_ttf and m
 pkg_search_module(SDL2 REQUIRED sdl2)

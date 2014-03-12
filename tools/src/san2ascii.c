@@ -56,6 +56,7 @@ int main (int argc, char *argv[]) {
       id + 1, width, height, bytes);
 
     pos_in_row = 0;
+    ignore_flag = 0;
     for (i = 0; i < bytes; i++) {
       if (ignore_flag) {
         ignore_flag = 0;

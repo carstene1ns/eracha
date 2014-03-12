@@ -10,6 +10,9 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
+/* the font */
+#include "pixelfont.h"
+
 /* window parameters */
 #define WINDOW_TITLE "ERACHA level viewer"
 #define WINDOW_WIDTH 800
@@ -155,7 +158,11 @@ int init()
   }
 
   /* load font */
+#if 0
   font = TTF_OpenFont("font/04B_03__.TTF", 8);
+#else
+  font = TTF_OpenFontRW(SDL_RWFromMem(pixelfont, pixelfont_len), 1, 8);
+#endif
   if(!font) {
     printf("Error while TTF_OpenFont: %s\n", TTF_GetError());
     return 0;

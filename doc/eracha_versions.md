@@ -13,10 +13,10 @@ Source file dates are between July 1995 and February 1996.
 
 It is bare in some aspects, for example:
 
-- No readme file
-- No archive format
-- sounds are in VOC subfolder
-- various "SaemSong" references for example in Loading Screen (working title?)
+ - No readme file
+ - No archive format
+ - sounds are in VOC subfolder
+ - various "SaemSong" references for example in Loading Screen (working title?)
 
 
 Release 1996
@@ -39,7 +39,7 @@ Hacked/Cracked/Modified/Warez
 These are assumptions, because I found this version uploaded to an abandonware
 site (group name is ZYLON) and do not know what has modified at all:
 
-- Most images are in PCX format and have some poorly translated strings
+ - Most images are in PCX format and have some poorly translated strings
 
 Source file dates are between June 1995 and February 1997, additionally the
 images have been modified June/July 1997. ERACHA.EXE has been modified with the

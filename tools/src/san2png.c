@@ -10,18 +10,18 @@
 
 #include <png.h>
 
+#include "helper.h"
+
 /* the default palettes */
 #include "palettes/open_pal.h"
 #include "palettes/era0XX_pal.h"
 
 /* main function */
-int main (int argc, char *argv[])
+int main(int argc, char *argv[])
 {
   unsigned int count;
   unsigned long size;
-  unsigned char *buf;
-  unsigned char *pixels;
-  size_t res;
+  unsigned char *buf, *pixels;
 
   png_structp png_ptr;
   png_infop info_ptr;
@@ -30,46 +30,25 @@ int main (int argc, char *argv[])
 
   if(argc == 1)
   {
-    printf("usage: san2png file.san");
+    printf("usage: san2png file.san\n");
     exit(1);
   }
 
   char *filename = argv[1];
 
-  FILE *fp = fopen(filename,"rb");
-  if(fp == NULL)
-  {
-    perror("fopen");
-    exit(1);
-  }
-
-  fseek(fp, 0, SEEK_END);
-  size = ftell(fp);
-  rewind(fp);
-
-  buf = (unsigned char *)malloc(sizeof(unsigned char) * size);
+  buf = loadfile2(filename, &size);
   if(buf == NULL)
-  {
-    perror("malloc");
     exit(1);
-  }
-
-  res = fread(buf, 1, size, fp);
-  if(res != size)
-  {
-    perror("fread");
-    exit(1);
-  }
-  fclose(fp);
 
   /* parse file header */
   count = buf[10];
-  printf("'%s' has %d images, file size is %li.\n", filename, count, size-12);
+  printf("'%s' has %d images, data size is %li bytes.\n", filename, count,
+    size-12);
 
-  unsigned int id, offset, width, height, bytes, i, j, ignore_flag, pos_in_row, padding;
+  unsigned int offset, width, height, bytes, i, j, ignore_flag, pos_in_row, padding;
   offset = 12;
 
-  for (id = 0; id < count; id++)
+  for(unsigned int id = 0; id < count; id++)
   {
     /* FIXME */
     char filename_new[10];
@@ -84,20 +63,21 @@ int main (int argc, char *argv[])
 
     /* png init */
     png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
-    if (png_ptr == NULL)
+    if(png_ptr == NULL)
     {
       fclose(des);
       exit(1);
     }
     info_ptr = png_create_info_struct(png_ptr);
-    if (info_ptr == NULL)
+    if(info_ptr == NULL)
     {
       fclose(des);
       png_destroy_write_struct(&png_ptr, NULL);
       exit(1);
     }
     /* error handling */
-    if (setjmp(png_jmpbuf(png_ptr))) {
+    if(setjmp(png_jmpbuf(png_ptr)))
+    {
       fclose(des);
       png_destroy_write_struct(&png_ptr, NULL);
       exit(1);
@@ -118,7 +98,7 @@ int main (int argc, char *argv[])
       PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
 
     palette = (png_colorp)png_malloc(png_ptr, 256 * sizeof(png_color));
-    for (i = 0; i < 256; i++)
+    for(i = 0; i < 256; i++)
     {
       /* FIXME */
 #if 0
@@ -149,26 +129,26 @@ int main (int argc, char *argv[])
 
     pos_in_row = 0;
     ignore_flag = 0;
-    for (i = 0; i < bytes; i++)
+    for(i = 0; i < bytes; i++)
     {
-      if (ignore_flag)
+      if(ignore_flag)
       {
         ignore_flag = 0;
         continue;
       }
 
       /* check for rle padding */
-      if (buf[offset + 6 + i] == '\0')
+      if(buf[offset + 6 + i] == '\0')
       {
         /* ignore next byte in outer loop */
         ignore_flag = 1;
         padding = buf[offset + 6 + i + 1];
 
-        for (j = 0; j < padding; j++)
+        for(j = 0; j < padding; j++)
         {
           pixels[pos_in_row] = 0;
           pos_in_row++;
-          if (pos_in_row == width)
+          if(pos_in_row == width)
           {
             /* write out the line */
             png_write_row(png_ptr, (png_bytep)pixels);
@@ -180,7 +160,7 @@ int main (int argc, char *argv[])
       {
         pixels[pos_in_row] = buf[offset + 6 + i];
         pos_in_row++;
-        if (pos_in_row == width)
+        if(pos_in_row == width)
         {
           /* write out the line */
           png_write_row(png_ptr, (png_bytep)pixels);
@@ -190,7 +170,7 @@ int main (int argc, char *argv[])
     }
     if(pos_in_row < width)
     {
-      for (j = 0; j < width - pos_in_row; j++)
+      for(j = 0; j < width - pos_in_row; j++)
       {
         pixels[pos_in_row] = 0;
         pos_in_row++;

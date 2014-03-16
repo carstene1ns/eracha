@@ -1,17 +1,18 @@
 # ignore 
 
-# cmake files
+# cmake files (in-source-build)
 tools/CMakeFiles
 tools/CMakeCache.txt
 tools/cmake_install.cmake
 tools/Makefile
 
-# executables
+# executables (in-source-build)
 tools/edam
 tools/edc
 tools/san2ascii
 tools/san2png
 tools/til2png
 tools/pal2gpl
+tools/pal2png
 tools/sme2ascii
 tools/levelviewer

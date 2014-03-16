@@ -1,3 +1,12 @@
+
+/******************************************************************************
+ * pixelfont.h - 04B_03__.TTF by yuji oshimoto
+ *
+ *****************************************************************************/
+
+#ifndef _pixelfont_h_
+#define _pixelfont_h_
+
 unsigned char pixelfont[] = {
   0x00, 0x01, 0x00, 0x00, 0x00, 0x0e, 0x00, 0x30, 0x00, 0x03, 0x00, 0xb0,
   0x4f, 0x53, 0x2f, 0x32, 0x82, 0x78, 0x6f, 0x85, 0x00, 0x00, 0x4b, 0x58,
@@ -1626,3 +1635,5 @@ unsigned char pixelfont[] = {
   0x00, 0x01, 0x00, 0x01
 };
 unsigned int pixelfont_len = 19492;
+
+#endif /* _pixelfont_h_ */

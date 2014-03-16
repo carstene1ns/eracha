@@ -8,67 +8,49 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "helper.h"
+
 /* main function */
-int main (int argc, char *argv[]) {
-  unsigned int width, height;
-  unsigned char tile[2];
-  unsigned long size;
+int main(int argc, char *argv[])
+{
+  unsigned int width, height, tile, offset, i, j;
   unsigned char *buf;
-  size_t res;
+
+  if(argc == 1)
+  {
+    printf("usage: sme2ascii file.sme\n");
+    exit(1);
+  }
 
   char *filename = argv[1];
 
-  FILE *fp = fopen(filename,"rb");
-  if(fp == NULL) {
-    perror("fopen");
+  buf = loadfile1(filename);
+  if(buf == NULL)
     exit(1);
-  }
-
-  fseek(fp, 0, SEEK_END);
-  size = ftell(fp);
-  rewind(fp);
-
-  buf = (unsigned char *)malloc(sizeof(char) * size);
-  if(buf == NULL) {
-    perror("malloc");
-    exit(1);
-  }
-
-  res = fread(buf, 1, size, fp);
-  if(res != size) {
-    perror("fread");
-    exit(1);
-  }
-
-  unsigned int offset, i, j;
 
   /* parse file header */
   offset = 33;
   width = buf[offset] | (buf[offset + 1] << 8);
-  height = buf[offset + 4];
+  height = buf[offset + 4] | (buf[offset + 5] << 8);
 
-  printf("'%s' level size is %dx%d, file size is %li.\n",
-    filename, width, height, size-41);
+  printf("'%s' level size is %dx%d.\n", filename, width, height);
 
   offset = 41;
-  for (i = 0; i < height; i++) {
-    for (j = 0; j < width; j = j + 2) {
-      tile[0] = buf[offset + i * width * 2 + j];
-      tile[1] = buf[offset + i * width * 2 + j + 1];
+  for(i = 0; i < height; i++)
+  {
+    for(j = 0; j < width; j = j + 2)
+    {
+      tile = buf[offset + i * width * 2 + j] | (buf[offset + i * width * 2 + j + 1] << 8);
 
-      if (tile[0] == '\0' && tile[1] == '\0') {
-        //printf("    ");
-        printf("  ");
-      } else {
-        //printf("%02x%02x", tile[0], tile[1]);
-        printf("%02x", tile[0]);
-      }
+      if(tile != 0)
+        printf("%03x", tile);
+      else
+        printf("   ");
     }
     printf("\n");
   }
 
   /* all good, exit */
-  fclose(fp);
   free(buf);
   exit(0);
 }

@@ -12,4 +12,6 @@ unsigned char *loadfile2(char *filename, unsigned long *filesize);
 
 void changefileext(char *szPath, char *ext);
 
+void extractfilename(char *name, char *path);
+
 #endif /* _helper_h_ */

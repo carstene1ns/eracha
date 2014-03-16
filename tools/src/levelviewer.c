@@ -12,6 +12,7 @@
 
 /* the font */
 #include "pixelfont.h"
+#include "helper.h"
 
 /* window parameters */
 #define WINDOW_TITLE "ERACHA level viewer"
@@ -57,34 +58,6 @@ tlevelinfo levelinfo = { 0, 0, "", NULL, NULL };
 ttilesetinfo tilesetinfo = { 0, 0 };
 
 /* helper functions */
-void changefileext(char *path, char *ext)
-{
-  /* find file name */
-  char *pFile = strrchr(path, '/');
-  pFile = pFile == NULL ? path : pFile + 1;
-
-  /* change extension */
-  char *pExt = strrchr(pFile, '.');
-  if (pExt != NULL)
-    strcpy(pExt, ext);
-  else
-    strcat(pFile, ext);
-}
-
-void extractfilename(char *name, char *path)
-{
-  /* find file name */
-  char *pFile = strrchr(path, '/');
-  pFile = pFile == NULL ? path : pFile + 1;
-
-  /* remove extension */
-  char *pExt = strrchr(pFile, '.');
-  if (pExt != NULL)
-    strncpy(name, pFile, pExt - pFile);
-  else
-    strcpy(name, pFile);
-}
-
 void cleanup()
 {
   if (TTF_WasInit())
@@ -174,31 +147,13 @@ int init()
 
 int loadlevel(char *levelfilename, char *attributesfilename)
 {
+  unsigned char *buf;
+  unsigned long size;
+
   /* load level file */
-  FILE *fp = fopen(levelfilename, "rb");
-  if(fp == NULL)
-  {
-    perror("fopen");
-    return 0;
-  }
-
-  fseek(fp, 0, SEEK_END);
-  unsigned long size = ftell(fp);
-  rewind(fp);
-
-  unsigned char *buf = (unsigned char *)malloc(sizeof(unsigned char) * size);
+  buf = loadfile2(levelfilename, &size);
   if(buf == NULL)
-  {
-    perror("malloc");
     return 0;
-  }
-
-  size_t res = fread(buf, 1, size, fp);
-  if(res != size)
-  {
-    perror("fread");
-    return 0;
-  }
 
   /* parse file header */
   levelinfo.width = buf[ENDOFSMEHEADER - 8] | (buf[ENDOFSMEHEADER - 7] << 8);
@@ -215,33 +170,13 @@ int loadlevel(char *levelfilename, char *attributesfilename)
 
   /* cleanup */
   free(buf);
-  fclose(fp);
+  buf = NULL;
+  size = 0L;
 
   /* load attributes file */
-  fp = fopen(attributesfilename, "rb");
-  if(fp == NULL)
-  {
-    perror("fopen");
-    return 0;
-  }
-
-  fseek(fp, 0, SEEK_END);
-  size = ftell(fp);
-  rewind(fp);
-
-  buf = (unsigned char *)malloc(sizeof(unsigned char) * size);
+  buf = loadfile2(attributesfilename, &size);
   if(buf == NULL)
-  {
-    perror("malloc");
     return 0;
-  }
-
-  res = fread(buf, 1, size, fp);
-  if(res != size)
-  {
-    perror("fread");
-    return 0;
-  }
 
   /* cache attributes in memory */
   levelinfo.attributes = (unsigned char *)malloc(sizeof(unsigned char) * (size - ENDOFATRHEADER));
@@ -254,37 +189,15 @@ int loadlevel(char *levelfilename, char *attributesfilename)
 
   /* cleanup */
   free(buf);
-  fclose(fp);
 
   return 1;
 }
 
 int loadtileset(char *filename)
 {
-  FILE *fp = fopen(filename, "rb");
-  if(fp == NULL)
-  {
-    perror("fopen");
-    return 0;
-  }
-
-  fseek(fp, 0, SEEK_END);
-  unsigned long size = ftell(fp);
-  rewind(fp);
-
-  unsigned char *buf = (unsigned char *)malloc(sizeof(unsigned char) * size);
+  unsigned char *buf = loadfile1(filename);
   if(buf == NULL)
-  {
-    perror("malloc");
     return 0;
-  }
-
-  size_t res = fread(buf, 1, size, fp);
-  if(res != size)
-  {
-    perror("fread");
-    return 0;
-  }
 
   /* parse file header */
   tilesetinfo.size = buf[ENDOFTILHEADER - 3];
@@ -348,9 +261,8 @@ int loadtileset(char *filename)
       d.w = tilesetinfo.size;
       d.h = tilesetinfo.size;
 
-      /* copy to big surface */
+      /* copy to big surface and cleanup */
       SDL_BlitSurface(s, NULL, temp, &d);
-
       SDL_FreeSurface(s);
     }
   }
@@ -369,14 +281,13 @@ int loadtileset(char *filename)
   SDL_FreeSurface(temp);
   SDL_FreePalette(pal);
   free(buf);
-  fclose(fp);
 
   return 1;
 }
 
 void zoom_in()
 {
-  if (viewerstate.zoom < 8)
+  if(viewerstate.zoom < 8)
   {
     viewerstate.zoom++;
     viewerstate.needsupdate = 1;
@@ -385,7 +296,7 @@ void zoom_in()
 
 void zoom_out()
 {
-  if (viewerstate.zoom > 1)
+  if(viewerstate.zoom > 1)
   {
     viewerstate.zoom--;
     viewerstate.needsupdate = 1;
@@ -394,7 +305,7 @@ void zoom_out()
 
 void next_overlay()
 {
-  if (viewerstate.overlay < 31)
+  if(viewerstate.overlay < 31)
   {
     viewerstate.overlay++;
     viewerstate.needsupdate = 1;
@@ -403,7 +314,7 @@ void next_overlay()
 
 void prev_overlay()
 {
-  if (viewerstate.overlay > -1)
+  if(viewerstate.overlay > -1)
   {
     viewerstate.overlay--;
     viewerstate.needsupdate = 1;
@@ -581,25 +492,22 @@ void plotlevel()
               (levelinfo.attributes[y * levelinfo.width * 4 + x * 4 + 3] << 24);
 
       /* -1 is special */
-      if(viewerstate.overlay == -1)
+      if(viewerstate.overlay == -1 && block == 0)
       {
-        if(block == 0)
-        {
-          SDL_Rect src, dest;
+        SDL_Rect src, dest;
 
-          src.x = 0;
-          src.y = 8;
-          src.w = tilesetinfo.size;
-          src.h = tilesetinfo.size;
+        src.x = 0;
+        src.y = 8;
+        src.w = tilesetinfo.size;
+        src.h = tilesetinfo.size;
 
-          dest.x = xpos;
-          dest.y = ypos;
-          dest.w = viewerstate.zoom * tilesetinfo.size;
-          dest.h = viewerstate.zoom * tilesetinfo.size;
+        dest.x = xpos;
+        dest.y = ypos;
+        dest.w = viewerstate.zoom * tilesetinfo.size;
+        dest.h = viewerstate.zoom * tilesetinfo.size;
 
-          /* copy block to window */
-          SDL_RenderCopy(renderer, overlaytex, &src, &dest);
-        }
+        /* copy block to window */
+        SDL_RenderCopy(renderer, overlaytex, &src, &dest);
       }
       else
       {
@@ -637,7 +545,6 @@ void plotlevel()
 
   SDL_Surface *text = TTF_RenderText_Solid(font, title, white);
   SDL_Texture *texttex = SDL_CreateTextureFromSurface(renderer, text);
-  SDL_FreeSurface(text);
 
   /* set text position and zoom */
   SDL_Rect textrect;
@@ -645,7 +552,11 @@ void plotlevel()
   textrect.y = 4;
   textrect.w = text->w * 2;
   textrect.h = text->h * 2;
+
+  /* draw and cleanup */
   SDL_RenderCopy(renderer, texttex, NULL, &textrect);
+  SDL_FreeSurface(text);
+  SDL_DestroyTexture(texttex);
 
   /* draw gray bottom line */
   SDL_SetRenderDrawColor(renderer, 127, 127, 127, 255);
@@ -696,21 +607,15 @@ int main(int argc, char *argv[])
 
   /* setup window */
   if(!init())
-  {
     exit(0);
-  }
 
   /* load data */
   if(!loadlevel(levelfile, attributesfile))
-  {
     exit(0);
-  }
 
   /* load gfx */
   if(!loadtileset(tilesetfile))
-  {
     exit(0);
-  }
 
   /* main loop */
   while(viewerstate.running)

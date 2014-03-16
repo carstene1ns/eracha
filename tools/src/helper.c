@@ -73,3 +73,20 @@ void changefileext(char *szPath, char *ext)
   else
     strcat(pFile, ext);
 }
+
+void extractfilename(char *name, char *path)
+{
+  /* find file name */
+  char *pFile = strrchr(path, '/');
+  if(pFile == NULL)
+    pFile = path;
+  else
+    pFile = pFile + 1;
+
+  /* remove extension */
+  char *pExt = strrchr(pFile, '.');
+  if (pExt != NULL)
+    strncpy(name, pFile, pExt - pFile);
+  else
+    strcpy(name, pFile);
+}

@@ -34,7 +34,7 @@ add_executable(pal2png src/pal2png.c src/helper.c)
 add_executable(til2png src/til2png.c src/helper.c)
 add_executable(san2png src/san2png.c src/helper.c)
 add_executable(sme2ascii src/sme2ascii.c src/helper.c)
-add_executable(levelviewer src/levelviewer.c)
+add_executable(levelviewer src/levelviewer.c src/helper.c)
 
 # pkg-config finds our needed libraries
 include(FindPkgConfig)

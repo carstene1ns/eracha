@@ -16,3 +16,9 @@ tools/pal2gpl
 tools/pal2png
 tools/sme2ascii
 tools/levelviewer
+
+# game content
+game/
+
+# temporary stuff
+tmp/

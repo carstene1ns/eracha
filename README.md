@@ -1,13 +1,15 @@
 Eracha Project
 ==============
 
-This is a little project to reverse engineer parts of the ERACHA platformer,
-made by korean game developers Mirinae Software and released for DOS in 1996.
-There has also been a re-release on CD-Rom by Green Pepper and a demo version.
+This is a little project to reverse engineer/reimplement parts of the ERACHA
+platformer, made by korean game developers Mirinae Software and released for
+DOS in 1996. There has also been a re-release on CD-Rom by Green Pepper and a
+demo version.
 
 Currently, it only contains assorted notes about the used file formats and
 some hacked up helper programs to deal with them. There are extractor and
-converter utilities in the tools directory (in alpha stage).
+converter utilities in the `reverse_engineering/tools` directory (in alpha
+stage).
 
 The goal is to create an cross platform interpreter of the game sometime.
 

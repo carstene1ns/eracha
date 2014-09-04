@@ -1,10 +1,10 @@
 # ignore 
 
 # cmake files (in-source-build)
-reverse_engineering/tools/CMakeFiles
-reverse_engineering/tools/CMakeCache.txt
-reverse_engineering/tools/cmake_install.cmake
-reverse_engineering/tools/Makefile
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+Makefile
 
 # executables (in-source-build)
 reverse_engineering/tools/edam
@@ -16,6 +16,7 @@ reverse_engineering/tools/pal2gpl
 reverse_engineering/tools/pal2png
 reverse_engineering/tools/sme2ascii
 reverse_engineering/tools/levelviewer
+eracha
 
 # game content
 game/

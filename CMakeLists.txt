@@ -19,7 +19,7 @@ project(eracha C)
 #set(CMAKE_VERBOSE_MAKEFILE on)
 
 # for c files
-set(CMAKE_C_FLAGS "${CMAKE_CXX_FLAGS} -std=c99")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
 # for both c and c++
 add_definitions(-Wall -Wextra -pedantic)
 
@@ -35,8 +35,8 @@ include(FindPkgConfig)
 
 # needed libraries: sdl2 sdl2_mixer sdl2_image
 pkg_search_module(SDL2 REQUIRED sdl2)
-pkg_search_module(SDL2_MIXER REQUIRED sdl2_mixer)
-pkg_search_module(SDL2_IMAGE REQUIRED sdl2_image)
+pkg_search_module(SDL2_MIXER REQUIRED SDL2_mixer)
+pkg_search_module(SDL2_IMAGE REQUIRED SDL2_image)
 
 include_directories(
   ${SDL2_MIXER_INCLUDE_DIRS}

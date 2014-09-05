@@ -1,11 +1,16 @@
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <SDL.h>
 
 #include "game.h"
 #include "helpers.h"
 #include "audio.h"
 #include "video.h"
+#include "level.h"
+
+int state = STATE_LEVEL;
+int level = LEVEL_01;
 
 int InitSDL() {
   if(SDL_Init(SDL_INIT_VIDEO|SDL_INIT_EVENTS|SDL_INIT_AUDIO) != 0)
@@ -23,17 +28,26 @@ int InitSDL() {
   return 1;
 }
 
-
-int main(int argc, char *argv[]){
+int main(int argc, char *argv[]) {
   UNUSED(argc);
   UNUSED(argv);
 
-  if(!InitSDL()){
+  if(!InitSDL()) {
     printf("Failed to initialize SDL, Error: %s\n", SDL_GetError());
     exit(1);
   }
 
-  SDL_Delay(2000);
+  int quit = 0;
+  while(!quit) {
+  	switch(state) {
+      case STATE_LEVEL:
+        LevelState();
+        break;
+      default:
+        quit = 1;
+        break;
+    }
+  }
 
   /* exit gracefully */
   exit(0);

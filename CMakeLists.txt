@@ -27,6 +27,9 @@ add_definitions(-Wall -Wextra -pedantic)
 add_executable(eracha
   src/audio.c
   src/video.c
+  src/event.c
+  src/level.c
+  src/file.c
   src/main.c
 )
 

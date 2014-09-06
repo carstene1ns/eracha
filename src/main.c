@@ -10,7 +10,6 @@
 #include "level.h"
 
 int state = STATE_LEVEL;
-int level = LEVEL_01;
 
 int InitSDL() {
   if(SDL_Init(SDL_INIT_VIDEO|SDL_INIT_EVENTS|SDL_INIT_AUDIO) != 0)
@@ -36,6 +35,8 @@ int main(int argc, char *argv[]) {
     printf("Failed to initialize SDL, Error: %s\n", SDL_GetError());
     exit(1);
   }
+
+  level.number = LEVEL_01;
 
   int quit = 0;
   while(!quit) {

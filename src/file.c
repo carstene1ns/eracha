@@ -5,7 +5,6 @@
 #include <ctype.h>
 #include <assert.h>
 
-#include "helpers.h"
 #include "game.h"
 #include "file.h"
 
@@ -21,29 +20,131 @@ char *FilenameFromId(int id) {
   strcpy(temp, "data/");
 
   switch(id) {
-    case ARCHIVE_MAPS:
-      strcat(temp, "MIRM.MMF");
-      break;
     case ARCHIVE_BKGS:
       strcat(temp, "MIRB.MBF");
       break;
+    case ARCHIVE_TILE:
+      strcat(temp, "MIRT.MTF");
+      break;
+    case ARCHIVE_MAPS:
+      strcat(temp, "MIRM.MMF");
+      break;
+    case ARCHIVE_ATTR:
+      strcat(temp, "MIRA.MAF");
+      break;
     case ARCHIVE_MUS1:
       strcat(temp, "MIR10.MMF");
+      break;
+    case ARCHIVE_MUS2:
+      strcat(temp, "MIR11.MMF");
+      break;
+    case ARCHIVE_MUS3:
+      strcat(temp, "MIR12.MMF");
+      break;
+    case ARCHIVE_SND1:
+      strcat(temp, "MIR01.MWF");
+      break;
+    case ARCHIVE_SND2:
+      strcat(temp, "MIR02.MWF");
+      break;
+    case ARCHIVE_SND3:
+      strcat(temp, "MIR03.MWF");
+      break;
+    default:
+      strcat(temp, "no.file");
       break;
   }
   return temp;
 }
 
-char *LoadLevel(int lvl, unsigned int width, unsigned int height) {
-  UNUSED(lvl);
-  UNUSED(width);
-  UNUSED(height);
+unsigned char *LoadLevelF(int lvl, unsigned int *width, unsigned int *height) {
+  unsigned int size;
+  unsigned char *temp_buf = (unsigned char *)UnpackArchive(ARCHIVE_MAPS,
+    lvl - LEVEL_01 + 1, &size);
 
-  return NULL;
+  /* error while loading */
+  if(size == 0)
+    return NULL;
+
+  /* parse file header */
+  *width = temp_buf[SME_HEADER_SIZE - 8] | (temp_buf[SME_HEADER_SIZE - 7] << 8);
+  *height = temp_buf[SME_HEADER_SIZE - 4] | (temp_buf[SME_HEADER_SIZE - 3] << 8);
+
+  printf("level width: %u, height: %u\n", *width, *height);
+
+  /* cache level in memory */
+  unsigned char *buf = malloc((size - SME_HEADER_SIZE) * sizeof(unsigned char));
+  if(buf == NULL) {
+    perror("malloc");
+    /* cleanup */
+    free(temp_buf);
+    *width = 0;
+    *height = 0;
+    return NULL;
+  }
+  memcpy(buf, &temp_buf[SME_HEADER_SIZE], size - SME_HEADER_SIZE);
+
+  /* cleanup */
+  free(temp_buf);
+
+  return buf;
 }
 
-char *LoadBackgroundF(int bkg, unsigned *size) {
-  printf("Loading Background #%d\n", bkg);
+unsigned char *LoadAttributesF(int lvl, unsigned int *size) {
+  unsigned int temp_size;
+  unsigned char *temp_buf = (unsigned char *)UnpackArchive(ARCHIVE_ATTR,
+    lvl - LEVEL_01 + 1, &temp_size);
+
+  /* error while loading */
+  if(temp_size == 0L)
+    return NULL;
+
+  *size = temp_size - ATR_HEADER_SIZE;
+
+  /* cache attributes in memory */
+  unsigned char *buf = malloc(*size * sizeof(unsigned char));
+  if(buf == NULL) {
+    perror("malloc");
+    /* cleanup */
+    free(temp_buf);
+    *size = 0;
+    return NULL;
+  }
+  memcpy(buf, &temp_buf[ATR_HEADER_SIZE], *size);
+
+  /* cleanup */
+  free(temp_buf);
+
+  return buf;
+}
+
+char *LoadTilesetF(int tset, unsigned int *size)
+{
+  printf("Loading Tileset #%d\n", tset - LEVEL_01 + 1);
+
+  unsigned int temp_size;
+  char *temp_buf = UnpackArchive(ARCHIVE_TILE, tset - LEVEL_01 + 1, &temp_size);
+
+  /* error while loading */
+  if(temp_size == 0)
+    return NULL;
+
+  *size = temp_size - TIL_HEADER_SIZE;
+  char *buffer = malloc(*size * sizeof(char));
+  if (buffer == NULL) {
+    perror("malloc");
+    exit(1);
+  }
+
+  /* copy raw data */
+  memcpy(buffer, &temp_buf[TIL_HEADER_SIZE], *size);
+  free(temp_buf);
+
+  return (char *)buffer;
+}
+
+char *LoadBackgroundF(int bkg, unsigned int *size) {
+  printf("Loading Background #%d\n", bkg - LEVEL_01 + 1);
 
   char *temp_buf = UnpackArchive(ARCHIVE_BKGS, bkg - LEVEL_01 + 1, size);
 
@@ -51,7 +152,7 @@ char *LoadBackgroundF(int bkg, unsigned *size) {
   if(*size == 0)
     return NULL;
 
-  *size = (*size + PCX_HEADER_SIZE - BCK_HEADER_SIZE);
+  *size = *size + PCX_HEADER_SIZE - BCK_HEADER_SIZE;
   /* add PCX header and clear it */
   unsigned char *buffer = malloc(*size * sizeof(unsigned char));
   if (buffer == NULL) {
@@ -76,14 +177,14 @@ char *LoadBackgroundF(int bkg, unsigned *size) {
 
   /* add the raw data */
   memcpy(&buffer[PCX_HEADER_SIZE], &temp_buf[BCK_HEADER_SIZE], *size - PCX_HEADER_SIZE);
+
+  /* cleanup */
   free(temp_buf);
 
   return (char *)buffer;
 }
 
-char *LoadMusicF(int mod, unsigned *size) {
-  printf("Loading Music #%d\n", mod);
-
+char *LoadMusicF(int mod, unsigned int *size) {
   int archive, entry;
   if(mod >= LEVEL_01 && mod < LEVEL_COUNT) {
     archive = ARCHIVE_MUS1;
@@ -96,10 +197,12 @@ char *LoadMusicF(int mod, unsigned *size) {
     entry = mod - MUSIC_MENU + 1;
   }
 
+  printf("Loading Music %d/%d\n", archive, entry);
+
   char *buffer = UnpackArchive(archive, entry, size);
 
   /* error while loading */
-  if(size == 0)
+  if(*size == 0)
     return NULL;
 
   return buffer;
@@ -107,20 +210,31 @@ char *LoadMusicF(int mod, unsigned *size) {
 
 /* Archive */
 
-char *UnpackArchive(int file, int number, unsigned *size) {
+char *UnpackArchive(int file, int number, unsigned int *size) {
   /* open the specified file in binary mode */
   char *filename = FilenameFromId(file);
   FILE *fp = fopen(filename, "rb");
+
+  /* error */
   if(fp == NULL) {
     perror("fopen");
-    exit(1);
+    /* cleanup */
+    *size = 0;
+    return NULL;
   }
 
   /* get file count */
   int numfiles = 0;
   fseek(fp, 9, SEEK_SET);
   int r = fread(&numfiles, 1, 1, fp);
-  assert(r == 1);
+
+  /* error */
+  if(r != 1 || numfiles < 1 || numfiles > 10) {
+    printf("Error: Number of files in archive is wrong!");
+    /* cleanup */
+    *size = 0;
+    return NULL;
+  }
 
   /* get file sizes and offsets */
   unsigned int loffset = ARCHIVE_HEADER_SIZE;
@@ -154,13 +268,18 @@ char *UnpackArchive(int file, int number, unsigned *size) {
     exit(1);
   } 
 
-  printf("loaded %s (%u bytes)...\n", lname, lsize);
+  printf("loading %u bytes from %s...\n", lsize, lname);
 
   fseek(fp, loffset, SEEK_SET);
   unsigned int asize = fread(buffer, 1, lsize, fp);
 
+  /* error */
   if(asize != lsize) {
-    printf("requested %u bytes, got %u bytes.", lsize, asize);
+    printf("Error: requested %u bytes, got %u bytes!", lsize, asize);
+    /* cleanup */
+    *size = 0;
+    free(buffer);
+    return NULL;
   }
   *size = asize;
 

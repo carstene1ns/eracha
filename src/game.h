@@ -31,9 +31,9 @@ enum gamelevels {
 
 enum gamearchives {
   ARCHIVE_BKGS = 20,
+  ARCHIVE_TILE,
   ARCHIVE_MAPS,
   ARCHIVE_ATTR,
-  ARCHIVE_ENEM,
   ARCHIVE_MUS1,
   ARCHIVE_MUS2,
   ARCHIVE_MUS3,
@@ -58,8 +58,15 @@ enum extramusic {
   MUSIC_COUNT
 };
 
+typedef struct {
+  unsigned int number, width, height;
+  int shift_x, shift_y;
+  unsigned char *map;
+  unsigned char *atr;
+} tlevel;
+
 /* globals */
 extern int state;
-extern int level;
+extern tlevel level;
 
 #endif /* GAME_H */

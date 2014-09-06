@@ -1,9 +1,9 @@
 
 #include <SDL.h>
 
-#include "game.h"
 #include "event.h"
 #include "audio.h"
+#include "game.h"
 #include "level.h"
 #include "video.h"
 
@@ -18,14 +18,14 @@ int EventLoop() {
 
         /* DEBUG: Level switching */
         case SDLK_PAGEUP:
-          if(level < LEVEL_COUNT-1) {
-            level++;
+          if(level.number < LEVEL_COUNT-1) {
+            level.number++;
             InitLevel();
           }
           break;
         case SDLK_PAGEDOWN:
-          if(level > LEVEL_01) {
-            level--;
+          if(level.number > LEVEL_01) {
+            level.number--;
             InitLevel();
           }
           break;
@@ -34,6 +34,20 @@ int EventLoop() {
           break;
         case SDLK_END:
           PlayMusic();
+          break;
+
+        /* DEBUG: Level viewport */
+        case SDLK_DOWN:
+          level.shift_y++;
+          break;
+        case SDLK_UP:
+          level.shift_y--;
+          break;
+        case SDLK_RIGHT:
+          level.shift_x++;
+          break;
+        case SDLK_LEFT:
+          level.shift_x--;
           break;
 
         /* Volume (always available) */

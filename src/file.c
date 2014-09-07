@@ -11,7 +11,7 @@
 char *FilenameFromId(int id) {
   char *temp = NULL;
   temp = malloc(16);
-  if (temp == NULL) {
+  if(temp == NULL) {
     perror("malloc");
     exit(1);
   }
@@ -60,7 +60,7 @@ char *FilenameFromId(int id) {
 unsigned char *LoadLevelF(int lvl, unsigned int *width, unsigned int *height) {
   unsigned int size;
   unsigned char *temp_buf = (unsigned char *)UnpackArchive(ARCHIVE_MAPS,
-    lvl - LEVEL_01 + 1, &size);
+                            lvl - LEVEL_01 + 1, &size);
 
   /* error while loading */
   if(size == 0)
@@ -93,7 +93,7 @@ unsigned char *LoadLevelF(int lvl, unsigned int *width, unsigned int *height) {
 unsigned char *LoadAttributesF(int lvl, unsigned int *size) {
   unsigned int temp_size;
   unsigned char *temp_buf = (unsigned char *)UnpackArchive(ARCHIVE_ATTR,
-    lvl - LEVEL_01 + 1, &temp_size);
+                            lvl - LEVEL_01 + 1, &temp_size);
 
   /* error while loading */
   if(temp_size == 0L)
@@ -118,8 +118,7 @@ unsigned char *LoadAttributesF(int lvl, unsigned int *size) {
   return buf;
 }
 
-char *LoadTilesetF(int tset, unsigned int *size)
-{
+char *LoadTilesetF(int tset, unsigned int *size) {
   printf("Loading Tileset #%d\n", tset - LEVEL_01 + 1);
 
   unsigned int temp_size;
@@ -131,7 +130,7 @@ char *LoadTilesetF(int tset, unsigned int *size)
 
   *size = temp_size - TIL_HEADER_SIZE;
   char *buffer = malloc(*size * sizeof(char));
-  if (buffer == NULL) {
+  if(buffer == NULL) {
     perror("malloc");
     exit(1);
   }
@@ -155,7 +154,7 @@ char *LoadBackgroundF(int bkg, unsigned int *size) {
   *size = *size + PCX_HEADER_SIZE - BCK_HEADER_SIZE;
   /* add PCX header and clear it */
   unsigned char *buffer = malloc(*size * sizeof(unsigned char));
-  if (buffer == NULL) {
+  if(buffer == NULL) {
     perror("malloc");
     exit(1);
   }
@@ -163,17 +162,17 @@ char *LoadBackgroundF(int bkg, unsigned int *size) {
 
   /* set some values of the pcx header, rest can be calculated */
   /* thanks to http://www.fileformat.info/format/pcx/corion.htm */
-  buffer[0] = 10;                     /* id */
-  buffer[1] = 5;                      /* version */
-  buffer[2] = 1;                      /* rle */
-  buffer[3] = 8;                      /* bits per pixel */
-  buffer[8] = (PCX_WIDTH-1) & 0xFF;   /* width low bits */
-  buffer[9] = (PCX_WIDTH-1) >> 8;     /* width high bits */
-  buffer[10] = (PCX_HEIGHT-1) & 0xFF; /* height low bits */
-  buffer[11] = (PCX_HEIGHT-1) >> 8;   /* height high bits */
-  buffer[65] = 1;                     /* number of color planes */
-  buffer[66] = PCX_WIDTH & 0xFF;      /* bytes per scanline */
-  buffer[67] = PCX_WIDTH >> 8;        /* bytes per scanline */
+  buffer[0] = 10;                       /* id */
+  buffer[1] = 5;                        /* version */
+  buffer[2] = 1;                        /* rle */
+  buffer[3] = 8;                        /* bits per pixel */
+  buffer[8] = (PCX_WIDTH - 1) & 0xFF;   /* width low bits */
+  buffer[9] = (PCX_WIDTH - 1) >> 8;     /* width high bits */
+  buffer[10] = (PCX_HEIGHT - 1) & 0xFF; /* height low bits */
+  buffer[11] = (PCX_HEIGHT - 1) >> 8;   /* height high bits */
+  buffer[65] = 1;                       /* number of color planes */
+  buffer[66] = PCX_WIDTH & 0xFF;        /* bytes per scanline */
+  buffer[67] = PCX_WIDTH >> 8;          /* bytes per scanline */
 
   /* add the raw data */
   memcpy(&buffer[PCX_HEADER_SIZE], &temp_buf[BCK_HEADER_SIZE], *size - PCX_HEADER_SIZE);
@@ -239,7 +238,7 @@ char *UnpackArchive(int file, int number, unsigned int *size) {
   /* get file sizes and offsets */
   unsigned int loffset = ARCHIVE_HEADER_SIZE;
   unsigned int lsize = 0;
-  for (int i = 0; i < number; i++) {
+  for(int i = 0; i < number; i++) {
     /* read 3 bytes */
     fread(&lsize, 1, 3, fp);
     /* skip 1 (0x00 padding) */
@@ -251,13 +250,13 @@ char *UnpackArchive(int file, int number, unsigned int *size) {
   /* get file names, stored at end of file */
   char lname[13];
   fseek(fp, -ARCHIVE_FOOTER_SIZE, SEEK_END);
-  for (int i = 0; i < number; i++) {
+  for(int i = 0; i < number; i++) {
     /* file name in dos format (XXXXXXXX.XXX)
      * as they are seperated by 0x00, we get string terminators for free
      */
     fread(&lname, 1, 13, fp);
     /* convert filenames to lowercase */
-    for (int j = 0; j < 13; j++) {
+    for(int j = 0; j < 13; j++) {
       lname[j] = tolower(lname[j]);
     }
   }
@@ -266,7 +265,7 @@ char *UnpackArchive(int file, int number, unsigned int *size) {
   if(buffer == NULL) {
     perror("malloc");
     exit(1);
-  } 
+  }
 
   printf("loading %u bytes from %s...\n", lsize, lname);
 

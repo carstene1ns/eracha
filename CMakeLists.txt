@@ -52,4 +52,12 @@ target_link_libraries(eracha
   ${SDL2_LIBRARIES}
 )
 
+# source code formatter
+add_custom_target(source-format
+  COMMAND astyle --options=none --suffix=none --style=google --max-code-length=90 --pad-oper
+    --break-after-logical --convert-tabs --indent=spaces=2 --indent-switches  --unpad-paren
+    --align-pointer=name "${CMAKE_SOURCE_DIR}/src/*.c" "${CMAKE_SOURCE_DIR}/src/*.h"
+  COMMENT "Applying source code format..." VERBATIM
+)
+
 # EOF

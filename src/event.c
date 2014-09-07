@@ -12,13 +12,13 @@ int EventLoop() {
 
   /* Check for new events */
   while(SDL_PollEvent(&event)) {
-    
+
     if(event.type == SDL_KEYDOWN) {
       switch(event.key.keysym.sym) {
 
         /* DEBUG: Level switching */
         case SDLK_PAGEUP:
-          if(level.number < LEVEL_COUNT-1) {
+          if(level.number < LEVEL_COUNT - 1) {
             level.number++;
             InitLevel();
           }
@@ -72,7 +72,7 @@ int EventLoop() {
     }
 
     /* If a quit event has been sent */
-    if (event.type == SDL_QUIT)
+    if(event.type == SDL_QUIT)
       return 1;
   }
 

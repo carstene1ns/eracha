@@ -20,7 +20,7 @@ int InitAudio() {
       return 0;
   }
 
-  if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
+  if(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
     return 0;
 
   Mix_AllocateChannels(16);
@@ -60,24 +60,24 @@ void PlayMusic() {
 
 void MusicVolumeUp() {
   int oldvol = Mix_VolumeMusic(-1);
-  if(oldvol < MIX_MAX_VOLUME-8)
-    Mix_VolumeMusic(oldvol+8);
+  if(oldvol < MIX_MAX_VOLUME - 8)
+    Mix_VolumeMusic(oldvol + 8);
 }
 
 void MusicVolumeDown() {
   int oldvol = Mix_VolumeMusic(-1);
   if(oldvol > 8)
-    Mix_VolumeMusic(oldvol-8);
+    Mix_VolumeMusic(oldvol - 8);
 }
 
 void EffectVolumeUp() {
   int oldvol = Mix_Volume(-1, -1);
-  if(oldvol < MIX_MAX_VOLUME-8)
-    Mix_Volume(-1, oldvol+8);
+  if(oldvol < MIX_MAX_VOLUME - 8)
+    Mix_Volume(-1, oldvol + 8);
 }
 
 void EffectVolumeDown() {
   int oldvol = Mix_Volume(-1, -1);
   if(oldvol > 8)
-    Mix_Volume(-1, oldvol-8);
+    Mix_Volume(-1, oldvol - 8);
 }

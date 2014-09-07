@@ -12,7 +12,7 @@
 int state = STATE_LEVEL;
 
 int InitSDL() {
-  if(SDL_Init(SDL_INIT_VIDEO|SDL_INIT_EVENTS|SDL_INIT_AUDIO) != 0)
+  if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO) != 0)
     return 0;
 
   atexit(SDL_Quit);
@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
 
   int quit = 0;
   while(!quit) {
-  	switch(state) {
+    switch(state) {
       case STATE_LEVEL:
         LevelState();
         break;

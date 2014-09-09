@@ -6,12 +6,22 @@ platformer, made by korean game developers Mirinae Software and released for
 DOS in 1996. There has also been a re-release on CD-Rom by Green Pepper and a
 demo version.
 
-Currently, it only contains assorted notes about the used file formats and
-some hacked up helper programs to deal with them. There are extractor and
-converter utilities in the `reverse_engineering/tools` directory (in alpha
-stage).
+Assorted notes about the used file formats are in the `reverse_engineering/doc`
+directory and some hacked up helper programs to deal (extract and convert) with
+them in the `reverse_engineering/tools` directory.
 
 The goal is to create an cross platform interpreter of the game sometime.
+
+Current implemented features of the interpreter:
+
+ * basic data file loading (map, background, music...)
+ * drawing of the static level elements and background
+ * playing of music
+
+Screenshots
+-----------
+
+![alpha_version](assets/screenshots/alpha.png)
 
 Legal Disclaimer
 ----------------

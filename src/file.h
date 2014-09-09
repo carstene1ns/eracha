@@ -15,7 +15,7 @@
 
 char *FilenameFromId(int id);
 
-unsigned char *LoadLevelF(int lvl, unsigned int *width, unsigned int *height);
+unsigned int *LoadLevelF(int lvl, unsigned int *width, unsigned int *height);
 unsigned char *LoadAttributesF(int lvl, unsigned int *size);
 char *LoadTilesetF(int tset, unsigned int *size);
 char *LoadBackgroundF(int bkg, unsigned int *size);

@@ -160,8 +160,7 @@ void DrawLevel() {
           (level.shift_y + y) < 0 || level.shift_y + y > (int)level.height)
         continue;
 
-      unsigned int level_pos = (y + level.shift_y) * level.width * 2 + (x + level.shift_x) * 2;
-      unsigned int block = (level.map[level_pos]) | (level.map[level_pos + 1] << 8);
+      unsigned int block = level.map[(y + level.shift_y) * level.width + x + level.shift_x];
 
       /* skip empty blocks */
       if(block == 0)

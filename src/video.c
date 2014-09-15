@@ -156,11 +156,11 @@ void DrawLevel() {
     for(int y = 0; y < GAME_HEIGHT / TILE_SIZE; y++) {
 
       /* make sure block is in level bounds */
-      if((level.shift_x + x) < 0 || level.shift_x + x > (int)level.width ||
-          (level.shift_y + y) < 0 || level.shift_y + y > (int)level.height)
+      if((level.shift_x + x) < 0 || level.shift_x + x > (int)level.width - 1 ||
+          (level.shift_y + y) < 0 || level.shift_y + y > (int)level.height - 1)
         continue;
 
-      unsigned int block = level.map[(y + level.shift_y) * level.width + x + level.shift_x];
+      unsigned int block = level.map[(y + level.shift_y)][x + level.shift_x];
 
       /* skip empty blocks */
       if(block == 0)

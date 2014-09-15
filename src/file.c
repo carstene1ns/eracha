@@ -57,7 +57,7 @@ char *FilenameFromId(int id) {
   return temp;
 }
 
-unsigned int *LoadLevelF(int lvl, unsigned int *width, unsigned int *height) {
+unsigned int **LoadLevelF(int lvl, unsigned int *width, unsigned int *height) {
   unsigned int size;
   unsigned char *temp_buf = (unsigned char *)UnpackArchive(ARCHIVE_MAPS,
                             lvl - LEVEL_01 + 1, &size);
@@ -73,8 +73,8 @@ unsigned int *LoadLevelF(int lvl, unsigned int *width, unsigned int *height) {
   printf("level width: %u, height: %u\n", *width, *height);
 
   /* cache level in memory */
-  unsigned int *buf = malloc((size - SME_HEADER_SIZE) / 2 * sizeof(unsigned int));
-  if(buf == NULL) {
+  unsigned int **mapdata = malloc(*height * sizeof(unsigned int *));
+  if(mapdata == NULL) {
     perror("malloc");
     /* cleanup */
     free(temp_buf);
@@ -82,16 +82,32 @@ unsigned int *LoadLevelF(int lvl, unsigned int *width, unsigned int *height) {
     *height = 0;
     return NULL;
   }
+  for(unsigned int i = 0; i < *height ; i++) {
+    mapdata[i] = malloc(*width * sizeof(unsigned int));
+    if(mapdata[i] == NULL) {
+      perror("malloc");
+      /* cleanup */
+      free(temp_buf);
+      for(unsigned int j = 0; j < i ; j++)
+        free(mapdata[j]);
+      free(mapdata);
+      *width = 0;
+      *height = 0;
+      return NULL;
+    }
+  }
 
   /* convert to integers */
-  for(unsigned int i = 0; i < size - SME_HEADER_SIZE; i = i + 2) {
-    buf[i / 2] = (temp_buf[SME_HEADER_SIZE + i]) | (temp_buf[SME_HEADER_SIZE + i + 1] << 8);
-  }
+  for(unsigned int i = 0; i < *height; i++)
+    for(unsigned int j = 0; j < *width; j++) {
+      unsigned int pos = SME_HEADER_SIZE + i **width * 2 + j * 2;
+      mapdata[i][j] = (temp_buf[pos]) | (temp_buf[pos + 1] << 8);
+    }
 
   /* cleanup */
   free(temp_buf);
 
-  return buf;
+  return mapdata;
 }
 
 unsigned char *LoadAttributesF(int lvl, unsigned int *size) {

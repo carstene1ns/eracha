@@ -60,7 +60,7 @@ enum extramusic {
 
 typedef struct {
   unsigned int number, width, height;
-  int shift_x, shift_y;
+  int shift_x, shift_y, max_x, max_y;
   unsigned int **map;
   unsigned char *atr;
 } tlevel;

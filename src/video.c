@@ -152,39 +152,51 @@ void DrawLevel() {
   SDL_RenderCopy(renderer, backgroundTexture, NULL, &backgroundRect);
 
   /* draw level layer */
-  for(int x = 0; x < GAME_WIDTH / TILE_SIZE; x++) {
-    for(int y = 0; y < GAME_HEIGHT / TILE_SIZE; y++) {
+  int x, y, x1, x2, y1, y2;
+  unsigned int map_x, map_y;
 
-      /* make sure block is in level bounds */
-      if((level.shift_x + x) < 0 || level.shift_x + x > (int)level.width - 1 ||
-          (level.shift_y + y) < 0 || level.shift_y + y > (int)level.height - 1)
-        continue;
+  /* get scroll position */
+  map_x = level.shift_x / TILE_SIZE;
+  x1 = (level.shift_x % TILE_SIZE) * -1;
+  x2 = x1 + GAME_WIDTH + (x1 == 0 ? 0 : TILE_SIZE);
 
-      unsigned int block = level.map[(y + level.shift_y)][x + level.shift_x];
+  map_y = level.shift_y / TILE_SIZE;
+  y1 = (level.shift_y % TILE_SIZE) * -1;
+  y2 = y1 + GAME_HEIGHT + (y1 == 0 ? 0 : TILE_SIZE);
+
+  for(y = y1; y < y2; y += TILE_SIZE) {
+    map_x = level.shift_x / TILE_SIZE;
+
+    for(x = x1; x < x2; x += TILE_SIZE) {
+      unsigned int block = level.map[map_y][map_x];
 
       /* skip empty blocks */
-      if(block == 0)
-        continue;
+      if(block != 0) {
 
-      /* magic to get correct tile */
-      int row = block / TILE_COLS;
-      int col = block - row * TILE_COLS;
+        /* magic to get correct tile */
+        int row = block / TILE_COLS;
+        int col = block - row * TILE_COLS;
 
-      SDL_Rect src, dest;
+        SDL_Rect src, dest;
 
-      src.x = col * TILE_SIZE;
-      src.y = row * TILE_SIZE;
-      src.w = TILE_SIZE;
-      src.h = TILE_SIZE;
+        src.x = col * TILE_SIZE;
+        src.y = row * TILE_SIZE;
+        src.w = TILE_SIZE;
+        src.h = TILE_SIZE;
 
-      dest.x = x * TILE_SIZE * STATIC_ZOOM;
-      dest.y = y * TILE_SIZE * STATIC_ZOOM;
-      dest.w = TILE_SIZE * STATIC_ZOOM;
-      dest.h = TILE_SIZE * STATIC_ZOOM;
+        dest.x = x * STATIC_ZOOM;
+        dest.y = y * STATIC_ZOOM;
+        dest.w = TILE_SIZE * STATIC_ZOOM;
+        dest.h = TILE_SIZE * STATIC_ZOOM;
 
-      /* copy block to window */
-      SDL_RenderCopy(renderer, tilesetTexture, &src, &dest);
+        /* copy block to window */
+        SDL_RenderCopy(renderer, tilesetTexture, &src, &dest);
+      }
+
+      map_x++;
     }
+
+    map_y++;
   }
 
   /* draw enemies and caveman layer */

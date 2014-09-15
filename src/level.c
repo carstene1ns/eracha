@@ -51,6 +51,8 @@ int InitLevel() {
   /* reset viewport */
   level.shift_x = 0;
   level.shift_y = 0;
+  level.max_x = level.width * TILE_SIZE;
+  level.max_y = level.height * TILE_SIZE;
 
   if(!LoadBackground(level.number))
     return 0;

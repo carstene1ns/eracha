@@ -10,7 +10,9 @@
 #define PALETTE_COLORS 256
 #define PALETTE_SIZE (PALETTE_COLORS * 3)
 
+/* TODO: make dynamic */
 #define STATIC_ZOOM 3
+#define STATIC_SCROLL 4
 
 int InitVideo();
 void DeinitVideo();

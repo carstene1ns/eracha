@@ -148,7 +148,7 @@ void DrawLevel() {
   /* draw background (with parallax effect) */
   int w, h;
   SDL_QueryTexture(backgroundTexture, NULL, NULL, &w, &h);
-  int bg_shift = (int)(level.shift_x * 0.8) % 320;
+  int bg_shift = (int)(level.shift_x * BACKGROUND_SHIFT) % w;
   SDL_Rect backgroundClipRect = { bg_shift, 0, w, h };
   SDL_Rect backgroundRect = { 0, 0, (w - bg_shift) *STATIC_ZOOM, h * STATIC_ZOOM };
   SDL_RenderCopy(renderer, backgroundTexture, &backgroundClipRect, &backgroundRect);

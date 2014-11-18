@@ -9,6 +9,7 @@
 #define TILE_COUNT 3000
 #define PALETTE_COLORS 256
 #define PALETTE_SIZE (PALETTE_COLORS * 3)
+#define BACKGROUND_SHIFT 0.8
 
 /* TODO: make dynamic */
 #define STATIC_ZOOM 3

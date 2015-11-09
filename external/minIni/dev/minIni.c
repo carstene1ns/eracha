@@ -72,6 +72,7 @@
 #endif
 #if !defined strnicmp && !defined PORTABLE_STRNICMP
   #if defined __LINUX__ || defined __FreeBSD__ || defined __OpenBSD__ || defined __APPLE__
+    #include <strings.h>
     #define strnicmp  strncasecmp
   #endif
 #endif

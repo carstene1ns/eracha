@@ -4,7 +4,7 @@
 # written by carstene1ns, 2014
 ###############################################################################
 
-cmake_minimum_required (VERSION 2.8)
+cmake_minimum_required(VERSION 2.8.8)
 
 # set build type to debug, if not set
 if(DEFINED CMAKE_BUILD_TYPE)
@@ -18,20 +18,10 @@ project(eracha C)
 # be verbose
 #set(CMAKE_VERBOSE_MAKEFILE on)
 
-# for c files
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
 # for both c and c++
-add_definitions(-Wall -Wextra -pedantic)
-
-# program names
-add_executable(eracha
-  src/audio.c
-  src/video.c
-  src/event.c
-  src/level.c
-  src/file.c
-  src/main.c
-)
+set(WARNING_FLAGS "-Wall -Wextra -pedantic")
+# for c files
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 ${WARNING_FLAGS}")
 
 # pkg-config finds our needed libraries
 include(FindPkgConfig)
@@ -41,17 +31,33 @@ pkg_search_module(SDL2 REQUIRED sdl2)
 pkg_search_module(SDL2_MIXER REQUIRED SDL2_mixer)
 pkg_search_module(SDL2_IMAGE REQUIRED SDL2_image)
 
-include_directories(
+# programs
+add_executable(eracha
+  src/audio.c
+  src/video.c
+  src/event.c
+  src/level.c
+  src/file.c
+  src/config.c
+  src/main.c
+)
+target_include_directories(eracha PUBLIC
+  external
   ${SDL2_MIXER_INCLUDE_DIRS}
   ${SDL2_IMAGE_INCLUDE_DIRS}
   ${SDL2_INCLUDE_DIRS}
 )
 target_link_libraries(eracha
+  minIni
   ${SDL2_MIXER_LIBRARIES}
   ${SDL2_IMAGE_LIBRARIES}
   ${SDL2_LIBRARIES}
 )
 
+# libraries
+add_library(minIni STATIC
+  external/minIni/dev/minIni.c
+)
 # source code formatter
 add_custom_target(source-format
   COMMAND astyle --options=none --suffix=none --style=google --max-code-length=90 --pad-oper

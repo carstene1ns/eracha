@@ -53,9 +53,7 @@ int LoadMusic(int track) {
 
 void PlayMusic() {
   Mix_PlayMusic(music, -1);
-
-  /* SILENCE! */
-  Mix_VolumeMusic(9);
+  Mix_VolumeMusic(config.music_volume);
 }
 
 void MusicVolumeUp() {

@@ -65,8 +65,13 @@ typedef struct {
   unsigned char *atr;
 } tlevel;
 
+typedef struct {
+  unsigned int music_volume, zoom;
+} tconfig;
+
 /* globals */
 extern int state;
 extern tlevel level;
+extern tconfig config;
 
 #endif /* GAME_H */

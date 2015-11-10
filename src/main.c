@@ -8,6 +8,7 @@
 #include "audio.h"
 #include "video.h"
 #include "level.h"
+#include "config.h"
 
 int state = STATE_LEVEL;
 
@@ -30,6 +31,8 @@ int InitSDL() {
 int main(int argc, char *argv[]) {
   UNUSED(argc);
   UNUSED(argv);
+
+  DefaultConfig();
 
   if(!InitSDL()) {
     printf("Failed to initialize SDL, Error: %s\n", SDL_GetError());

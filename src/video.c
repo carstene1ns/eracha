@@ -15,7 +15,8 @@ static SDL_Texture *tilesetTexture = NULL;
 
 int InitVideo() {
   window = SDL_CreateWindow(GAME_NAME, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                            GAME_WIDTH * 3, GAME_HEIGHT * 3, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
+                            GAME_WIDTH * config.zoom, GAME_HEIGHT * config.zoom,
+                            SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
   if(window == NULL)
     return 0;
 
@@ -150,11 +151,11 @@ void DrawLevel() {
   SDL_QueryTexture(backgroundTexture, NULL, NULL, &w, &h);
   int bg_shift = (int)(level.shift_x * BACKGROUND_SHIFT) % w;
   SDL_Rect backgroundClipRect = { bg_shift, 0, w, h };
-  SDL_Rect backgroundRect = { 0, 0, (w - bg_shift) *STATIC_ZOOM, h * STATIC_ZOOM };
+  SDL_Rect backgroundRect = { 0, 0, (w - bg_shift) *config.zoom, h * config.zoom };
   SDL_RenderCopy(renderer, backgroundTexture, &backgroundClipRect, &backgroundRect);
   backgroundClipRect.x = 0;
-  backgroundRect.x = (w - bg_shift) * STATIC_ZOOM;
-  backgroundRect.w = w * STATIC_ZOOM;
+  backgroundRect.x = (w - bg_shift) * config.zoom;
+  backgroundRect.w = w * config.zoom;
   SDL_RenderCopy(renderer, backgroundTexture, &backgroundClipRect, &backgroundRect);
 
   /* draw level layer */
@@ -190,10 +191,10 @@ void DrawLevel() {
         src.w = TILE_SIZE;
         src.h = TILE_SIZE;
 
-        dest.x = x * STATIC_ZOOM;
-        dest.y = y * STATIC_ZOOM;
-        dest.w = TILE_SIZE * STATIC_ZOOM;
-        dest.h = TILE_SIZE * STATIC_ZOOM;
+        dest.x = x * config.zoom;
+        dest.y = y * config.zoom;
+        dest.w = TILE_SIZE * config.zoom;
+        dest.h = TILE_SIZE * config.zoom;
 
         /* copy block to window */
         SDL_RenderCopy(renderer, tilesetTexture, &src, &dest);

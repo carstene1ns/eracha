@@ -12,7 +12,6 @@
 #define BACKGROUND_SHIFT 0.8
 
 /* TODO: make dynamic */
-#define STATIC_ZOOM 3
 #define STATIC_SCROLL 4
 
 int InitVideo();

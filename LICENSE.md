@@ -3,7 +3,7 @@ documentation written by me and not the game itself.
 
 ---
 
-Copyright (c) 2014 carstene1ns
+Copyright (c) 2014-2021 carstene1ns
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

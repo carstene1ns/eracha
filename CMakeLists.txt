@@ -1,17 +1,16 @@
-
 ###############################################################################
-# CMakeLists.txt
-# written by carstene1ns, 2014
+# CMakeLists.txt for eracha
+# written by carstene1ns, 2014,2021
 ###############################################################################
 
-cmake_minimum_required(VERSION 2.8.8)
+cmake_minimum_required(VERSION 3.13)
 
 # set build type to debug, if not set
 if(DEFINED CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE ${CMAKE_BUILD_TYPE} CACHE STRING "Choose the type of build, options are: None(CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) Debug Release RelWithDebInfo MinSizeRel.")
-else(DEFINED CMAKE_BUILD_TYPE)
+else()
   set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build, options are: None(CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) Debug Release RelWithDebInfo MinSizeRel.")
-endif(DEFINED CMAKE_BUILD_TYPE)
+endif()
 
 project(eracha C)
 
@@ -26,7 +25,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 ${WARNING_FLAGS}")
 # pkg-config finds our needed libraries
 include(FindPkgConfig)
 
-# needed libraries: sdl2 sdl2_mixer sdl2_image
+# needed libraries: sdl2, sdl2_mixer and sdl2_image
 pkg_search_module(SDL2 REQUIRED sdl2)
 pkg_search_module(SDL2_MIXER REQUIRED SDL2_mixer)
 pkg_search_module(SDL2_IMAGE REQUIRED SDL2_image)
@@ -66,4 +65,8 @@ add_custom_target(source-format
   COMMENT "Applying source code format..." VERBATIM
 )
 
-# EOF
+# tools
+option(ENABLE_TOOLS "Enable the tools" OFF)
+if(ENABLE_TOOLS)
+  add_subdirectory(reverse_engineering/tools)
+endif()

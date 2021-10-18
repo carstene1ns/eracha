@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
   for(unsigned int id = 0; id < count; id++)
   {
     /* FIXME */
-    char filename_new[10];
+    char filename_new[12];
     sprintf(filename_new, "%s_%02d.png", "temp", id);
 
     FILE *des = fopen(filename_new, "wb");

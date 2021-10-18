@@ -173,7 +173,7 @@ int main (int argc, char *argv[]) {
       unsigned int id, offset, width, height, bytes, i, j, ignore_flag, padding, pix_count;
       offset = 12;
       for (id = 0; id < count; id++) {
-        char id_ext[5];
+        char id_ext[8];
         sprintf(id_ext, ".%02d_ppm", id);
         filename_to = changefileext(filename_from, id_ext);
 

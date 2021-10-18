@@ -420,6 +420,7 @@ void checkevents()
         case SDL_WINDOWEVENT_RESIZED:
           viewerstate.width = e.window.data1;
           viewerstate.height = e.window.data2;
+          /* FALLTHRU */
         case SDL_WINDOWEVENT_MOVED:
         case SDL_WINDOWEVENT_EXPOSED:
           viewerstate.needsupdate = 1;

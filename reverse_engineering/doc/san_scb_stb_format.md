@@ -3,9 +3,9 @@ Assorted notes about SAN/SCB/STB Formats
 
 Main graphics format for objects and enemies with corresponding data files.
 
-SAN - sprite animation
-SCB - coordinates?
-STB - movement/frames relation
+ - SAN - sprite animation
+ - SCB - coordinates? TODO
+ - STB - movement/frames relation
 
 Not all SAN files have a corresponding SCB file, but they are clearly related.
 It seems that only enemies have it and other objects not. I guess, that it is
@@ -48,7 +48,7 @@ SCB HEADER
 ----------
 
  * offset 0x0: number of frames
- * offset 0x2: 1 (unknown magic)
+ * offset 0x2: 1 = enemy, 2 = special (double frames)
  * offset 0x4 - EOF: 16 bytes per frame
 
 STB HEADER

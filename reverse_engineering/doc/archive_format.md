@@ -12,14 +12,17 @@ the archive:
  - MIRM.MMF ([M] - maps)
  - MIRT.MTF ([T] - tiles)
 
+The files can have a maximum number of 256 files inside, but in
+reality there are only 10 or less present.
+
 HEADER
 ------
 
-length: 0x40A (1034) bytes
+length: 0x40A (1034) bytes (= 10 + 256*4)
 
  * offset 0x0 - 0x8: padding (0x00)
  * offset 0x9: number of files
- * following offsets: lengths of files
+ * following offsets: lengths of files (as 32 bit LE number)
  * padding till end of header (0x00)
 
 DATA
@@ -30,7 +33,7 @@ DATA
 FOOTER
 ------
 
-length: 0xD00 (3328) bytes
+length: 0xD00 (3328) bytes (= 256*13)
 
  * list of filenames 8+3 dos format, seperated by 0x00
  * padding till end of file (0x00)

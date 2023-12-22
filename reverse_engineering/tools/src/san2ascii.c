@@ -64,31 +64,31 @@ int main(int argc, char *argv[])
 
         for(unsigned int j = 0; j < padding; j++)
         {
-          printf("   ");
+          printf(" ");
           pos_in_row++;
           if(pos_in_row == width)
           {
-            printf("|\n");
+            printf("\n");
             pos_in_row = 0;
           }
         }
       }
       else
       {
-        printf("%2x ", buf[offset + 6 + i]);
+        printf("#");
         pos_in_row++;
         if(pos_in_row == width)
         {
-          printf("I\n");
+          printf("\n");
           pos_in_row = 0;
         }
       }
     }
     for(unsigned int i = 0; i < width - pos_in_row; i++)
     {
-      printf("   ");
+      printf(" ");
     }
-    printf("!\n\n");
+    printf("\n\n");
 
     /* set offset for next image */
     offset += bytes + 8;
